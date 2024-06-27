@@ -15,13 +15,10 @@ WUPS_USE_STORAGE("notouch");
 
 bool disableTouch = false;
 
-void touchToggled(ConfigItemBoolean *item, bool newValue)
+void touchToggled(ConfigItemBoolean *, bool newValue)
 {
-   if (std::string_view(DISABLE_TOUCH_CONFIG_ID) == item->identifier)
-   {
-      WUPSStorageAPI::Store(item->identifier, newValue);
-      disableTouch = newValue;
-   }
+   WUPSStorageAPI::Store(DISABLE_TOUCH_CONFIG_ID, newValue);
+   disableTouch = newValue;
 }
 
 WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle rootHandle) {
@@ -36,8 +33,11 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
    }
    return WUPSCONFIG_API_CALLBACK_RESULT_SUCCESS;
 }
+
 void ConfigMenuClosedCallback()
-{}
+{
+   WUPSStorageAPI::SaveStorage();
+}
 
 INITIALIZE_PLUGIN() {
    WUPSConfigAPIOptionsV1 configOptions = {.name = "No Touch"};
