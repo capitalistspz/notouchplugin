@@ -4,7 +4,7 @@
 
 WUPS_PLUGIN_NAME("No Touch");
 WUPS_PLUGIN_DESCRIPTION("Disables touch input from the Wii U GamePad");
-WUPS_PLUGIN_VERSION("v1.0");
+WUPS_PLUGIN_VERSION("v1.1");
 WUPS_PLUGIN_AUTHOR("capitalistspz");
 WUPS_PLUGIN_LICENSE("MIT");
 
