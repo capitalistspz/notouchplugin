@@ -50,12 +50,16 @@ INITIALIZE_PLUGIN() {
 DECL_FUNCTION(int32_t, VPADRead, VPADChan chan, VPADStatus *buffers, uint32_t count, VPADReadError *outError)
 {
    const auto sampleCount =  real_VPADRead(chan, buffers, count, outError);
-   for (auto i = 0; i < sampleCount; ++i)
+   if (disableTouch)
    {
-      buffers[i].tpNormal.touched = !disableTouch;
-      buffers[i].tpFiltered1.touched = !disableTouch;
-      buffers[i].tpFiltered2.touched = !disableTouch;
+      for (auto i = 0; i < sampleCount; ++i)
+      {
+         buffers[i].tpNormal = {};
+         buffers[i].tpFiltered1 = {};
+         buffers[i].tpFiltered2 = {};
+      }
    }
+
    return sampleCount;
 }
 
