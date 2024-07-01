@@ -15,6 +15,8 @@ WUPS_USE_STORAGE("notouch");
 
 bool disableTouch = false;
 
+#define INVALID_TOUCH  VPADTouchData{0,0, 0, VPAD_INVALID_X | VPAD_INVALID_Y}
+
 void touchToggled(ConfigItemBoolean *, bool newValue)
 {
    WUPSStorageAPI::Store(DISABLE_TOUCH_CONFIG_ID, newValue);
@@ -54,9 +56,9 @@ DECL_FUNCTION(int32_t, VPADRead, VPADChan chan, VPADStatus *buffers, uint32_t co
    {
       for (auto i = 0; i < sampleCount; ++i)
       {
-         buffers[i].tpNormal = {};
-         buffers[i].tpFiltered1 = {};
-         buffers[i].tpFiltered2 = {};
+         buffers[i].tpNormal = INVALID_TOUCH;
+         buffers[i].tpFiltered1 =  INVALID_TOUCH;
+         buffers[i].tpFiltered2 =  INVALID_TOUCH;
       }
    }
 
